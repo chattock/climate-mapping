@@ -1,45 +1,41 @@
 // Initialize the map(s)
+// Initialize the map
 var map = L.map('map', {
     center: [45.519292, 11.338594],
     zoom: 6,
     maxBounds: L.latLngBounds([-90, -180], [90, 180]),
     maxBoundsViscosity: 1.0
-});
-var defaultMap = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  });
+  
+  var defaultMap = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     minZoom: 2,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-})
-var stadiaMap = L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_terrain_background/{z}/{x}/{y}@2x.png', {
-    maxZoom: 18,
-    minZoom: 2,
-    attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a> contributors'
-}).addTo(map);
-var esriMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}', {
-	attribution: 'Tiles &copy; Esri &mdash; Source: USGS, Esri, TANA, DeLorme, and NPS',
-	maxZoom: 9,
+    attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map);
+  
+  var esriMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles © Esri — Source: USGS, Esri, TANA, DeLorme, and NPS',
+    maxZoom: 9,
     minZoom: 2
-});
-defaultMap.addTo(map);
-map.removeLayer(defaultMap);
-stadiaMap.addTo(map);
-map.removeLayer(stadiaMap);
-esriMap.addTo(map);
-map.removeLayer(esriMap);
-defaultMap.addTo(map);
+  });
+  
+  defaultMap.addTo(map);
+  map.removeLayer(defaultMap);
+  esriMap.addTo(map);
+  map.removeLayer(esriMap);
+  defaultMap.addTo(map);
 
 // Assign CSS classes more effectively
 function assignTileClass(mapLayer, className) {
     mapLayer.on('load', function() {
-        document.querySelectorAll('.leaflet-tile-container').forEach(container => {
-            container.classList.add(className);
-        });
+      document.querySelectorAll('.leaflet-tile-container').forEach(container => {
+        container.classList.add(className);
+      });
     });
-}
-
-assignTileClass(defaultMap, 'default-map');
-assignTileClass(stadiaMap, 'stadia-map');
-assignTileClass(esriMap, 'esri-map');
+  }
+  
+  assignTileClass(defaultMap, 'default-map');
+  assignTileClass(esriMap, 'esri-map');
 
 // Initialize variables
 let circleExists = false;
@@ -239,25 +235,19 @@ document.addEventListener('DOMContentLoaded', function() {
 // Fix mapSwitch function logic for clear transition between maps
 function mapSwitch() {
     if (currentBasemap === 'default') {
-        map.removeLayer(defaultMap);
-        stadiaMap.addTo(map);
-        currentBasemap = 'stadia';
-        document.getElementById('basemapToggle').classList.remove('default-button');
-        document.getElementById('basemapToggle').classList.add('stadia-button');
-    } else if (currentBasemap === 'stadia') {
-        map.removeLayer(stadiaMap);
-        esriMap.addTo(map);
-        currentBasemap = 'esri';
-        document.getElementById('basemapToggle').classList.remove('stadia-button');
-        document.getElementById('basemapToggle').classList.add('esri-button');
+      map.removeLayer(defaultMap);
+      esriMap.addTo(map);
+      currentBasemap = 'esri';
+      document.getElementById('basemapToggle').classList.remove('default-button');
+      document.getElementById('basemapToggle').classList.add('esri-button');
     } else {
-        map.removeLayer(esriMap);
-        defaultMap.addTo(map);
-        currentBasemap = 'default';
-        document.getElementById('basemapToggle').classList.remove('esri-button');
-        document.getElementById('basemapToggle').classList.add('default-button');
+      map.removeLayer(esriMap);
+      defaultMap.addTo(map);
+      currentBasemap = 'default';
+      document.getElementById('basemapToggle').classList.remove('esri-button');
+      document.getElementById('basemapToggle').classList.add('default-button');
     }
-}
+  }
 
 document.getElementById('basemapToggle').addEventListener('click', mapSwitch);
 document.addEventListener('DOMContentLoaded', function() {
@@ -330,12 +320,12 @@ function handleButtonClick(id, coords, zoom) {
 
 // Setup event listeners for buttons
 handleButtonClick('01', [45.519292, 11.338594], 8);
-handleButtonClick('02', [45.4709699, 11.6014322], 15);
-handleButtonClick('03', [45.442492, 11.584501], 15);
-handleButtonClick('04', [46, 12], 9);
+handleButtonClick('02', [45.519292, 11.338594], 8);
+handleButtonClick('03', [41.315, -1.911], 4);
+handleButtonClick('04', [41.315, -1.911], 4);
 handleButtonClick('05', [41.315, -1.911], 4);
 handleButtonClick('06', [41, -1], 5);
-handleButtonClick('07', [45.519292, 11.338594], 15);
+handleButtonClick('07', [41, -1], 5);
 
 document.querySelectorAll('.menu a').forEach((menuLink, index) => {
     menuLink.addEventListener('click', function (e) {
