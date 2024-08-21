@@ -484,3 +484,7 @@ color: olivedrab;
     border: 1px solid #666;
     border-radius: 2px;
 }
+
+.spacer {
+    height: 20px; /* Adjust the height as needed */
+}
